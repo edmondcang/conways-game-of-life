@@ -1,0 +1,30 @@
+{
+  "name": "game-of-life",
+  "version": "0.0.1",
+  "description": "A simple web based game based on Conway's Game of Life",
+  "main": "index.js",
+  "keywords": [
+    "conway",
+    "game of life"
+  ],
+  "scripts": {
+    "start": "npm run build && node index",
+    "watch": "webpack --env=dev --watch",
+    "build": "webpack --env=prod --progress --profile --colors"
+  },
+  "dependencies": {
+    "express": "4.9.x",
+    "socket.io": "latest",
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.5.1",
+    "socket.io-client": "^2.0.1",
+    "webpack": "^2.3.2"
+  },
+  "author": "Edmond Cheng",
+  "license": "ISC"
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game of Life</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body oncontextmenu="return false">
+
+  <canvas id="app" class="canvas" ></canvas>
+
+  <div class="title">GAME OF LIFE</div>
+
+  <div id="control-panel" class="widget control-panel">
+    <div class="row align-center">
+      <button class="ctl-btn" id="ctl-spawn-beehive">Beehive</button>
+    </div>
+    <div class="row align-center">
+      <button class="ctl-btn" id="ctl-spawn-blinker">Blinker</button>
+    </div>
+    <div class="row align-center">
+      <button class="ctl-btn" id="ctl-spawn-glider">Glider</button>
+    </div>
+  </div>
+
+  <div id="info-bar" class="info-bar">
+    <div class="row clearfix">
+      <div class="item">Your color:&nbsp;</div>
+      <div id="color" class="color item"></div>
+    </div>
+    <div class="row">
+      Players:
+      <span id="n-players"></span>
+    </div>
+  </div>
+
+  <div id="coord-info" class="coord-info clearfix">
+    <div id="disp-x" class="item">0</div>
+    <div class="item">&comma;&nbsp;</div>
+    <div id="disp-y" class="item">0</div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/bundle.js"></script>
+</body>
+</html>
