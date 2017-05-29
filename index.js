@@ -76,9 +76,9 @@ setInterval(() => {
     if (!c.live) continue;
 
     let {x, y} = c.position;
+
     if (isOutBound(x, y)) {
-      delete Cells[pos];
-      Map[x][y] = null;
+      willDie.push(c);
       continue;
     }
 
@@ -139,8 +139,8 @@ setInterval(() => {
   neighbourMap = {};
 
   for (var c of willDie) {
-    if (c.live) c.live = false;
     let {x, y} = c.position;
+    delete Cells[`${x}:${y}`];
     Map[x][y] = 0;
   }
   willDie = [];
