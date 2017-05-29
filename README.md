@@ -41,3 +41,5 @@ $ npm start
 ```
 # TODOs
 - Improve performance and efficiency
+- Add controls to navigate the space (move around, zoom in and out)
+- Increase the space
