@@ -44,3 +44,4 @@ $ npm start
 - Add controls to navigate the space (move around, zoom in and out)
 - Increase the space
 - Add colour selection (the default colour doesn't always please me)
+- Add testing
