@@ -1,7 +1,7 @@
 {
   "name": "game-of-life",
   "version": "0.0.1",
-  "description": "A simple web based game based on Conway's Game of Life",
+  "description": "A simple web game based on Conway's Game of Life",
   "main": "index.js",
   "keywords": [
     "conway",

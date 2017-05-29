@@ -40,7 +40,6 @@ socket.on(SYSTEM, ({status, players}) => {
   nPlayers.innerText = players || '';
 });
 
-socket.on(CREATE_CELL, data => console.log(data));
 socket.on(UPDATE, cells => {
   State.cells = cells;
   drawCells();
