@@ -65,17 +65,52 @@ function drawCells() {
 function onNav(e) {
   switch (e.target.id) {
     case 'ctl-spawn-beehive':
-      spawnBeehive();
+      spawn('beehive');
       break;
     case 'ctl-spawn-blinker':
-      spawnBlinker();
+      spawn('blinker');
+      break;
+    case 'ctl-spawn-beacon':
+      spawn('beacon');
       break;
     case 'ctl-spawn-glider':
-      spawnGlider();
+      spawn('glider');
+      break;
+    case 'ctl-spawn-spaceship':
+      spawn('spaceship');
       break;
   }
 
   drawCells();
+}
+
+function makePattern(x, y) {
+  return {
+    'beehive': [
+      [x,y], [x+1,y+1], [x+2,y+1], [x+3,y],
+      [x+1,y-1], [x+2,y-1],
+    ],
+    'blinker': [
+      [x,y], [x+1,y], [x+2,y],
+    ],
+    'beacon': [
+      [x,y], [x+1,y],
+      [x,y+1], [x+1,y+1],
+      [x+2,y+2], [x+3,y+2],
+      [x+2,y+3], [x+3,y+3],
+    ],
+    'glider': [
+            [x+1,y+2],
+                    [x+2,y+1],
+      [x, y],[x+1,y],[x+2,y],
+    ],
+    'spaceship': [
+                [x,y],[x+1,y],[x+2,y],[x+3,y],
+      [x-1,y-1],                      [x+3,y-1],
+                                      [x+3,y-2],
+      [x-1,y-3],                      [x+2,y-3],
+    ],
+  };
 }
 
 function randPosition() {
@@ -86,78 +121,19 @@ function randPosition() {
   return {x, y};
 }
 
-function spawnGlider() {
+function sequence(list) {
   let positions = [];
-
-  let {x, y} = randPosition();
-  addCell(x, y);
-  positions.push({x, y});
-
-  x++;
-  addCell(x, y);
-  positions.push({x, y});
-
-  x++;
-  addCell(x, y);
-  positions.push({x, y});
-
-  y++;
-  addCell(x, y);
-  positions.push({x, y});
-
-  y++; x--;
-  addCell(x, y);
-  positions.push({x, y});
-
+  for (var p of list) {
+    addCell(p[0], p[1]);
+    positions.push({x: p[0], y: p[1]});
+  }
   socket.emit(CREATE_MULTI, positions);
 }
 
-function spawnBlinker() {
-  let positions = [];
-
+function spawn(name) {
   let {x, y} = randPosition();
-  addCell(x, y);
-  positions.push({x, y});
-
-  y++;
-  addCell(x, y);
-  positions.push({x, y});
-
-  y++;
-  addCell(x, y);
-  positions.push({x, y});
-
-  socket.emit(CREATE_MULTI, positions);
-}
-
-function spawnBeehive() {
-  let positions = [];
-
-  let {x, y} = randPosition();
-  addCell(x, y);
-  positions.push({x, y});
-
-  x++; y++;
-  addCell(x, y);
-  positions.push({x, y});
-
-  x++;
-  addCell(x, y);
-  positions.push({x, y});
-
-  x++; y--;
-  addCell(x, y);
-  positions.push({x, y});
-
-  x--; y--;
-  addCell(x, y);
-  positions.push({x, y});
-
-  x--;
-  addCell(x, y);
-  positions.push({x, y});
-
-  socket.emit(CREATE_MULTI, positions);
+  let patterns = makePattern(x, y);
+  sequence(patterns[name]);
 }
 
 function addCell(x, y) {

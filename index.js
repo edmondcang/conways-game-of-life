@@ -15,7 +15,6 @@ const INIT          = 3;
 const CREATE_MULTI  = 4;
 
 const Cells = {};
-const Map = [];
 
 const Left = -40;
 const Right = Left * -1;
@@ -91,7 +90,7 @@ setInterval(() => {
     for (var p of neighbourSpace) {
       let px = p[0], py = p[1];
       
-      if (typeof Map[px] !== typeof undefined && Map[px][py] == 1) {
+      if (hasCell(px, py)) {
         n++;
       }
       else {
@@ -133,7 +132,6 @@ setInterval(() => {
       }
 
       _c.color = _n.color;
-      willLive.push(_c);
     }
   }
   neighbourMap = {};
@@ -141,20 +139,19 @@ setInterval(() => {
   for (var c of willDie) {
     let {x, y} = c.position;
     delete Cells[`${x}:${y}`];
-    Map[x][y] = 0;
   }
   willDie = [];
 
-  for (var c of willLive) {
-    if (!c.live) c.live = true;
-    let {x, y} = c.position;
-    if (typeof Map[x] === typeof undefined) Map[x] = [];
-    Map[x][y] = 1;
-  }
-  willLive = [];
-
   io.sockets.emit(UPDATE, Cells);
 }, 1000);
+
+function getCell(x, y) {
+  return Cells[`${x}:${y}`];
+}
+
+function hasCell(x, y) {
+  return typeof getCell(x, y) !== typeof undefined;
+}
 
 function isOutBound(x, y) {
   return x <= Left || x >= Right || y <= Bottom || y >= Top;
@@ -170,10 +167,6 @@ function makeNeighbourSpace(x, y) {
 
 function addCell (position, color) {
   const { x, y } = position;
-
-  // Register this cell
-  if (typeof Map[x] === typeof undefined) Map[x] = [];
-  Map[x][y] = 1;
 
   const cell = new Cell(position, color);
   Cells[`${x}:${y}`] = cell;
