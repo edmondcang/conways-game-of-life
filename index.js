@@ -14,7 +14,7 @@ const SYSTEM        = 2;
 const INIT          = 3;
 const CREATE_MULTI  = 4;
 
-const Cells = {};
+var Cells = {};
 
 const Left = -40;
 const Right = Left * -1;
@@ -64,6 +64,7 @@ io.on('connection', onConnection);
 http.listen(port, () => console.log('listening on port ' + port));
 
 setInterval(() => {
+  if (players == 0) Cells = {};
   /** RULES
     * 1. Any live cell with fewer than two live neighbours dies, as if caused by under-population.
     * 2. Any live cell with two or three live neighbours lives on to the next generation.
@@ -141,7 +142,9 @@ setInterval(() => {
     delete Cells[`${x}:${y}`];
   }
   willDie = [];
+}, 1000);
 
+setInterval(() => {
   io.sockets.emit(UPDATE, Cells);
 }, 1000);
 
